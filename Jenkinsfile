@@ -1,28 +1,30 @@
-pipline{
-    agent any{
-        stages('clone code'){
-            steps{
+pipeline {
+    agent any
+
+    stages {
+        stage('Clone Code') {
+            steps {
                 git 'https://github.com/yashpatle741/First-Devops.git'
             }
-            }
-             stages('docker image'){
-                steps{
-                    sh 'docker build -t first-project .'
-                }
         }
-          stage('Stop & Remove Previous Container') {
+
+        stage('Build Docker Image') {
             steps {
-                sh '''
-                    docker stop first-container || true
-                    docker rm first-container || true
-                '''
+                sh 'docker build -t first-project .'
             }
         }
-        stage('Docker Container Run') {
+
+        stage('Stop & Remove Container') {
             steps {
-                sh '''
-                    docker run -d -p 3001:3000 --name first-container first-project
-                '''
-       
+                sh 'docker stop first-container || true'
+                sh 'docker rm first-container || true'
+            }
+        }
+
+        stage('Run Container') {
+            steps {
+                sh 'docker run -d -p 3000:3000 --name first-container first-project'
+            }
+        }
     }
 }
