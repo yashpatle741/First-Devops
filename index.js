@@ -5,7 +5,7 @@ const PORT = 3000;
 
 // Home route
 app.get("/", (req, res) => {
-  res.send("DevOps Project Runnings🚀");
+  res.send("DevOps Project Running🚀");
 });
 
 // Health check route (VERY IMPORTANT in real projects)
